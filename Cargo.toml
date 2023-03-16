@@ -1,0 +1,40 @@
+[package]
+name = "secure-data-exchange"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+my-http-server = { tag = "0.5.0", git = "https://github.com/MyJetTools/my-http-server.git", features = [
+    "my-telemetry",
+] }
+
+my-http-server-controllers = { tag = "0.5.0", git = "https://github.com/MyJetTools/my-http-server-controllers.git" }
+my-http-server-swagger = { tag = "0.5.0", git = "https://github.com/MyJetTools/my-http-server-swagger.git" }
+
+
+my-logger = { tag = "0.2.0", git = "https://github.com/MyJetTools/my-logger.git" }
+
+
+rust-extensions = { tag = "0.1.3", git = "https://github.com/MyJetTools/rust-extensions.git" }
+
+my-settings-reader = { tag = "0.1.5", git = "https://github.com/MyJetTools/my-settings-reader.git", features = [
+    "background-reader",
+] }
+
+flurl = { tag = "0.2.3", git = "https://github.com/MyJetTools/fl-url.git" }
+
+
+async-trait = "*"
+tokio = { version = "*", features = ["full"] }
+hyper = { version = "*", features = ["full"] }
+prost = "*"
+prost-types = "*"
+serde = { version = "*", features = ["derive"] }
+serde_json = "*"
+tokio-util = "*"
+futures = "*"
+serde_yaml = "*"
+futures-util = "*"
+uuid = { version = "*", features = ["v4"] }
