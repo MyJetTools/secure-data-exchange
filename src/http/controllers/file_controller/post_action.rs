@@ -1,17 +1,17 @@
 use std::sync::Arc;
 
 use super::contracts::*;
-use crate::{app::AppContext, messages::SecretMessage};
+use crate::{app::AppContext, files::SecretFile};
 use my_http_server::{HttpContext, HttpFailResult, HttpOkResult, HttpOutput};
 use rust_extensions::date_time::DateTimeAsMicroseconds;
 
 #[my_http_server_swagger::http_route(
     method: "POST",
-    route: "/api/message/v1",
-    summary: "Post message",
-    description: "Saves message and returns it id",
-    controller: "Message",
-    input_data: "PostMessageInputData",
+    route: "/api/file/v1",
+    summary: "Post file",
+    description: "Saves file and returns it id",
+    controller: "File",
+    input_data: "PostFileInputData",
     result:[
         {status_code: 200, description: "Ok response", model: "String"},
     ]
@@ -27,7 +27,7 @@ impl PostAction {
 }
 async fn handle_request(
     action: &PostAction,
-    input_data: PostMessageInputData,
+    input_data: PostFileInputData,
     ctx: &HttpContext,
 ) -> Result<HttpOkResult, HttpFailResult> {
     let id = uuid::Uuid::new_v4().to_string();
@@ -35,9 +35,9 @@ async fn handle_request(
     let mut expires = DateTimeAsMicroseconds::now();
     expires.add_minutes(5);
 
-    let message = SecretMessage {
+    let file = SecretFile {
         id: id.clone(),
-        message: input_data.message,
+        file: input_data.file,
         expires,
         ips: vec![
             ctx.request.get_ip().get_real_ip().to_string(),
@@ -45,10 +45,10 @@ async fn handle_request(
         ],
     };
 
-    action.app.messages.add(message).await;
+    action.app.files.add(file).await;
 
     let result = format!(
-        "{}://{}/message/{}",
+        "{}://{}/file/{}",
         ctx.request.get_scheme(),
         ctx.request.get_host(),
         id

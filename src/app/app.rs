@@ -2,11 +2,12 @@ use std::sync::Arc;
 
 use rust_extensions::AppStates;
 
-use crate::messages::SecretMessages;
+use crate::{files::SecretFiles, messages::SecretMessages};
 
 pub struct AppContext {
     pub app_states: Arc<AppStates>,
     pub messages: SecretMessages,
+    pub files: SecretFiles,
 }
 
 pub const APP_VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -19,6 +20,7 @@ impl AppContext {
         Self {
             app_states: app_states.clone(),
             messages: SecretMessages::new(),
+            files: SecretFiles::new(),
         }
     }
 }

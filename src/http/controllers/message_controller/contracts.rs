@@ -2,9 +2,9 @@ use my_http_server_swagger::*;
 
 #[derive(MyHttpInput)]
 pub struct PostMessageInputData {
-    #[http_query(description = "Destination ip")]
+    #[http_body(description = "Destination ip")]
     pub dest_ip: String,
-    #[http_query(description = "Message")]
+    #[http_body(description = "Message")]
     pub message: String,
 }
 

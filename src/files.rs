@@ -1,16 +1,17 @@
 use std::{collections::HashMap, sync::Arc};
 
+use my_http_server::types::FileContent;
 use rust_extensions::{date_time::DateTimeAsMicroseconds, lazy::LazyVec};
 use tokio::sync::RwLock;
 
-pub struct SecretMessage {
+pub struct SecretFile {
     pub id: String,
     pub expires: DateTimeAsMicroseconds,
-    pub message: String,
     pub ips: Vec<String>,
+    pub file: FileContent,
 }
 
-impl SecretMessage {
+impl SecretFile {
     pub fn has_ip(&self, my_ip: &str) -> bool {
         for ip in &self.ips {
             if ip == my_ip {
@@ -22,23 +23,23 @@ impl SecretMessage {
     }
 }
 
-pub struct SecretMessages {
-    item: RwLock<HashMap<String, Arc<SecretMessage>>>,
+pub struct SecretFiles {
+    item: RwLock<HashMap<String, Arc<SecretFile>>>,
 }
 
-impl SecretMessages {
+impl SecretFiles {
     pub fn new() -> Self {
         Self {
             item: RwLock::new(HashMap::new()),
         }
     }
 
-    pub async fn add(&self, message: SecretMessage) {
+    pub async fn add(&self, file: SecretFile) {
         let mut messages = self.item.write().await;
-        messages.insert(message.id.to_string(), Arc::new(message));
+        messages.insert(file.id.to_string(), Arc::new(file));
     }
 
-    pub async fn get(&self, id: &str) -> Option<Arc<SecretMessage>> {
+    pub async fn get(&self, id: &str) -> Option<Arc<SecretFile>> {
         let messages = self.item.read().await;
         messages.get(id).cloned()
     }

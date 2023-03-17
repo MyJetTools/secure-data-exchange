@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Super Chat</title>
+    <base href="/">
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <script src="/js/jquery.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body>
+    <div style="width: 600px; margin: auto;">
+        <label>Enter Ip:</label>
+        <input id="dest_ip" class="form-control" placeholder="ip" />
+        <label>Enter Message to sent:</label>
+        <textarea id="message" class="form-control" style="height: 400px;"></textarea>
+        <div style="text-align: right; margin-top: 20px;">
+            <button class="btn btn-primary" onclick="request()">Send</button>
+        </div>
+    </div>
+
+    <div id="result" style="display: none;">
+
+        <div>Please send this link: <input id="link" class="form-control" readonly></span></input>
+
+        </div>
+
+        <script>
+            function request() {
+                $.ajax({
+                    url: "/api/message/v1",
+                    type: "POST",
+                    data: {
+                        dest_ip: $("#dest_ip").val(),
+                        message: $("#message").val()
+                    },
+                    success: function (data) {
+                        $("#link").val(data);
+                        $("#result").show();
+                    },
+                    error: function (data) {
+                        alert("Error: " + data);
+                    }
+                });
+            }
+        </script>
+</body>

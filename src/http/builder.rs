@@ -14,5 +14,17 @@ pub async fn build_controllers(app: &Arc<AppContext>) -> ControllersMiddleware {
         super::controllers::message_controller::PostAction::new(app.clone()),
     ));
 
+    result.register_get_action(Arc::new(
+        super::controllers::message_controller::ShowMessageAction::new(app.clone()),
+    ));
+
+    result.register_post_action(Arc::new(
+        super::controllers::file_controller::PostAction::new(app.clone()),
+    ));
+
+    result.register_get_action(Arc::new(
+        super::controllers::file_controller::GetAction::new(app.clone()),
+    ));
+
     result
 }

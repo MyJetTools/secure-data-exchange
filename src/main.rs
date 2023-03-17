@@ -1,9 +1,12 @@
-use std::sync::Arc;
+use std::{sync::Arc, time::Duration};
 
 use app::AppContext;
+use rust_extensions::MyTimer;
 
 mod app;
 
+mod background;
+mod files;
 mod http;
 mod messages;
 
@@ -11,10 +14,10 @@ mod messages;
 async fn main() {
     let app = Arc::new(AppContext::new().await);
 
-    //let mut updater_timer = MyTimer::new(Duration::from_secs(10));
-    //updater_timer.register_timer("bid-ask-preview-updater", Arc::new(bid_ask_preview_timer));
+    let mut gc_timer = MyTimer::new(Duration::from_secs(10));
+    gc_timer.register_timer("gc", Arc::new(crate::background::GcTimer::new(app.clone())));
 
-    //updater_timer.start(app.app_states.clone(), my_logger::LOGGER.clone());
+    gc_timer.start(app.app_states.clone(), my_logger::LOGGER.clone());
 
     http::start_up::setup_server(app.clone()).await;
 
