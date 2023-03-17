@@ -37,3 +37,14 @@ jobs:
           docker build -t ${IMAGE_NAME}:${{ steps.get_version.outputs.VERSION }} .
           docker push ${IMAGE_NAME}:${{ steps.get_version.outputs.VERSION }}
           
+      - name: Deploy Service on VMs
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            /root/services/secure-data-exchange/change-image.py ${IMAGE_NAME}:${{ steps.get_version.outputs.VERSION }}
+            /usr/bin/docker-compose -f /root/services/secure-data-exchange/docker-compose.yaml pull
+            /usr/bin/docker-compose -f /root/services/secure-data-exchange/docker-compose.yaml up -d
