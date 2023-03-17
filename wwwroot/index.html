@@ -12,15 +12,43 @@
 </head>
 
 <body>
-    <div style="width: 600px; margin: auto;">
-        <label>Enter Ip:</label>
-        <input id="dest_ip" class="form-control" placeholder="ip" />
-        <label>Enter Message to sent:</label>
-        <textarea id="message" class="form-control" style="height: 400px;"></textarea>
-        <div style="text-align: right; margin-top: 20px;">
-            <button class="btn btn-primary" onclick="request()">Send</button>
-        </div>
-    </div>
+
+    <table style="width:100%">
+        <tr>
+            <td style="width: 50%;vertical-align: top;">
+
+                <div style="padding: 5px;">
+                    <h3>Send text here</h3>
+                    <label>Enter Ip:</label>
+                    <input id="dest_ip" class="form-control" placeholder="ip" />
+                    <label>Enter Message to send:</label>
+                    <textarea id="message" class="form-control" style="height: 400px;"></textarea>
+                    <div style="text-align: right; margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="request()">Send</button>
+                    </div>
+                </div>
+
+
+
+            </td>
+            <td style="vertical-align: top;margin: 5px;">
+                <div style="padding: 5px;">
+                    <h3>Send file here</h3>
+                    <form enctype="multipart/form-data" action="/api/file/v1" method="POST">
+                        <label>Enter Ip:</label>
+                        <input name="dest_ip" class="form-control" placeholder="ip" />
+                        <label>Upload File to send:</label>
+                        <input name="file" type="file" class="form-control" />
+                        <div style=" text-align: right; margin-top: 20px;">
+                            <button class="btn btn-primary">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+
 
     <div id="result" style="display: none;">
 

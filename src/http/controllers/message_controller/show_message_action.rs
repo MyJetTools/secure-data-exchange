@@ -45,6 +45,12 @@ async fn handle_request(
 }
 
 fn get_html(message: &str) -> String {
+    let mut html_message = String::new();
+
+    for line in message.split(10u8 as char) {
+        html_message.push_str(&format!("{}<br>", line));
+    }
+
     format!(
         r#"
     <!DOCTYPE html>
@@ -66,6 +72,6 @@ fn get_html(message: &str) -> String {
 </div>
  </body>
     "#,
-        message
+        html_message
     )
 }

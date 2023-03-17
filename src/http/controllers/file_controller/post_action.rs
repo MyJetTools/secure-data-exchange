@@ -48,7 +48,7 @@ async fn handle_request(
     action.app.files.add(file).await;
 
     let url = format!(
-        "{}://{}/file/{}",
+        "{}://{}/api/file/v1/{}",
         ctx.request.get_scheme(),
         ctx.request.get_host(),
         id
