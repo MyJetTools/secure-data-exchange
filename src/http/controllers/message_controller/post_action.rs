@@ -13,7 +13,7 @@ use rust_extensions::date_time::DateTimeAsMicroseconds;
     controller: "Message",
     input_data: "PostMessageInputData",
     result:[
-        {status_code: 200, description: "Ok response", model: "String"},
+        {status_code: 200, description: "Ok response", model: "PostMessageResponse"},
     ]
 )]
 pub struct PostAction {
@@ -47,12 +47,14 @@ async fn handle_request(
 
     action.app.messages.add(message).await;
 
-    let result = format!(
+    let url = format!(
         "{}://{}/message/{}",
         ctx.request.get_scheme(),
         ctx.request.get_host(),
         id
     );
 
-    return HttpOutput::as_text(result).into_ok_result(false).into();
+    return HttpOutput::as_json(PostMessageResponse { id, url })
+        .into_ok_result(false)
+        .into();
 }

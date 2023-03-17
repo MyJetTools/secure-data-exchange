@@ -13,7 +13,7 @@ use my_http_server::{HttpContext, HttpFailResult, HttpOkResult, HttpOutput};
     input_data: "GetFileInputData",
 
     result:[
-        {status_code: 200, description: "Ok response", model: "String"},
+        {status_code: 200, description: "Ok response"},
     ]
 )]
 pub struct GetAction {

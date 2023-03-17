@@ -13,7 +13,7 @@ use rust_extensions::date_time::DateTimeAsMicroseconds;
     controller: "File",
     input_data: "PostFileInputData",
     result:[
-        {status_code: 200, description: "Ok response", model: "String"},
+        {status_code: 200, description: "Ok response", model: "PostFileResponse"},
     ]
 )]
 pub struct PostAction {
@@ -47,12 +47,14 @@ async fn handle_request(
 
     action.app.files.add(file).await;
 
-    let result = format!(
+    let url = format!(
         "{}://{}/file/{}",
         ctx.request.get_scheme(),
         ctx.request.get_host(),
         id
     );
 
-    return HttpOutput::as_text(result).into_ok_result(false).into();
+    return HttpOutput::as_json(PostFileResponse { id, url })
+        .into_ok_result(false)
+        .into();
 }

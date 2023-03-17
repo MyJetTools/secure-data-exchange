@@ -1,5 +1,6 @@
 use my_http_server::types::FileContent;
 use my_http_server_swagger::*;
+use serde::Serialize;
 
 #[derive(MyHttpInput)]
 pub struct PostFileInputData {
@@ -7,6 +8,12 @@ pub struct PostFileInputData {
     pub dest_ip: String,
     #[http_form_data(description = "File")]
     pub file: FileContent,
+}
+
+#[derive(MyHttpObjectStructure, Serialize)]
+pub struct PostFileResponse {
+    pub id: String,
+    pub url: String,
 }
 
 #[derive(MyHttpInput)]

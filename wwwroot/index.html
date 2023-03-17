@@ -38,7 +38,7 @@
                         message: $("#message").val()
                     },
                     success: function (data) {
-                        $("#link").val(data);
+                        $("#link").val(data.url);
                         $("#result").show();
                     },
                     error: function (data) {
