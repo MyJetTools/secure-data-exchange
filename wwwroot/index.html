@@ -20,7 +20,7 @@
 
                 <div style="padding: 5px;">
                     <h3>Send text here</h3>
-                    <label>Enter Ip:</label>
+                    <label>Enter recipient Ip:</label>
                     <input id="dest_ip" class="form-control" placeholder="ip" />
                     <label>Enter Message to send:</label>
                     <textarea id="message" class="form-control" style="height: 400px;"></textarea>
@@ -34,7 +34,7 @@
                 <div style="padding: 5px;">
                     <h3>Send file here</h3>
                     <form enctype="multipart/form-data" action="/api/file/v1" method="POST">
-                        <label>Enter Ip:</label>
+                        <label>Enter recipient Ip:</label>
                         <input name="dest_ip" class="form-control" placeholder="ip" />
                         <label>Upload File to send:</label>
                         <input name="file" type="file" class="form-control" />
