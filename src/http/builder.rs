@@ -26,5 +26,9 @@ pub async fn build_controllers(app: &Arc<AppContext>) -> ControllersMiddleware {
         super::controllers::file_controller::GetAction::new(app.clone()),
     ));
 
+    result.register_get_action(Arc::new(
+        super::controllers::info_controller::GetIpAction::new(app.clone()),
+    ));
+
     result
 }

@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    <h2 id="ip"></h2>
 
     <table style="width:100%">
         <tr>
@@ -27,8 +28,6 @@
                         <button class="btn btn-primary" onclick="request()">Send</button>
                     </div>
                 </div>
-
-
 
             </td>
             <td style="vertical-align: top;margin: 5px;">
@@ -74,5 +73,22 @@
                     }
                 });
             }
+
+            function refreshIp() {
+                $.ajax({
+                    url: "/api/ip",
+                    type: "GET",
+
+                    success: function (data) {
+                        $("#ip").html("My ip is: " + data);
+
+                    },
+                    error: function (data) {
+                        alert("Error: " + data);
+                    }
+                });
+            }
+
+            window.setTimeout(refreshIp, 100);
         </script>
 </body>
